@@ -1,1 +1,1 @@
-﻿{"network":"studionet","status":"PENDING","note":"Updated after live deployment."}
+{"network":"studionet","chain_id":61999,"status":"FINALIZED","contract_address":"0x20bb203E313956121446F84a524CEA91e338c22D","deployment_transaction":"0x3f06d1e5cf61ff448f222918bb06ae5c284a8496491ec4adb21de6eb132a51d0","decision_transaction":"0x28ce193343d52ae78ce181058c3e82170c0e2e2e50d68e17fc13622fa6314c95","outcome":"UNRESOLVED / CAP_EXPOSURE; attempts=1."}
