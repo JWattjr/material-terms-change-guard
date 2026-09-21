@@ -8,8 +8,12 @@ POLICY = {"material_categories": ["REDEMPTION_FEES", "REDEMPTION_WINDOW", "FREEZ
 URLS = ["https://example.org/terms-v2"]
 
 
-def _deploy(direct_deploy, policy=POLICY, urls=URLS):
-    return direct_deploy(SRC, "usdx", "Terms v2 amendment", BASELINE, policy, urls)
+MAX_WAIT = "2099-01-01T00:00:00Z"
+ALL_UNCHANGED = {"REDEMPTION_FEES": "UNCHANGED", "REDEMPTION_WINDOW": "UNCHANGED", "FREEZE_RIGHTS": "UNCHANGED"}
+
+
+def _deploy(direct_deploy, policy=POLICY, urls=URLS, min_sources=1, max_wait=MAX_WAIT, baseline=BASELINE):
+    return direct_deploy(SRC, "usdx", "Terms v2 amendment", baseline, policy, urls, min_sources, max_wait)
 
 
 def _mock(direct_vm, states, status=200):
@@ -87,6 +91,46 @@ def test_validator_rejects_status_inconsistent_with_vector(direct_vm, direct_dep
     _mock(direct_vm, {"REDEMPTION_FEES": "ADVERSE", "REDEMPTION_WINDOW": "UNCHANGED", "FREEZE_RIGHTS": "UNCHANGED"})
     honest = c.review()
     assert not direct_vm.run_validator(leader_result=dict(honest, status="NO_MATERIAL_CHANGE", route="CONTINUE"))
+
+
+def test_fewer_reachable_sources_than_min_sources_fails_closed(direct_vm, direct_deploy):
+    c = _deploy(direct_deploy, urls=["https://example.org/a", "https://example.net/b"], min_sources=2)
+    direct_vm.mock_web(r"example\.org", {"status": 200, "body": "amended terms"})
+    direct_vm.mock_web(r"example\.net", {"status": 503, "body": "down"})
+    direct_vm.mock_llm(r".*", json.dumps({"category_states": ALL_UNCHANGED}))
+    result = c.review()
+    assert result["status"] == "UNRESOLVED" and result["route"] == "CAP_EXPOSURE" and result["source_coverage"] == 1
+
+
+def test_max_wait_freezes_unresolved_state(direct_vm, direct_deploy):
+    c = _deploy(direct_deploy)
+    _mock(direct_vm, dict(ALL_UNCHANGED, FREEZE_RIGHTS="UNCLEAR"))
+    assert c.review()["status"] == "UNRESOLVED"
+    direct_vm.warp("2100-01-01T00:00:00Z")
+    direct_vm.clear_mocks()
+    _mock(direct_vm, ALL_UNCHANGED)
+    state = c.review()
+    assert state["status"] == "UNRESOLVED" and state["route"] == "CAP_EXPOSURE" and state["terminal"]
+    assert state["attempts"] == 1
+
+
+def test_max_wait_without_review_is_unresolved(direct_vm, direct_deploy):
+    c = _deploy(direct_deploy)
+    direct_vm.warp("2100-01-01T00:00:00Z")
+    state = c.review()
+    assert state["status"] == "UNRESOLVED" and state["terminal"] and state["attempts"] == 0
+
+
+@pytest.mark.parametrize("kwargs,message", [
+    ({"min_sources": 0}, "min_sources"),
+    ({"min_sources": 2}, "min_sources"),
+    ({"max_wait": "2000-01-01T00:00:00Z"}, "future"),
+    ({"max_wait": "2099-01-01T00:00:00"}, "timezone"),
+    ({"baseline": {"terms": "x" * 4001}}, "4000"),
+])
+def test_constructor_rejects_bad_lifecycle_and_baseline(direct_vm, direct_deploy, kwargs, message):
+    with direct_vm.expect_revert(message):
+        _deploy(direct_deploy, **kwargs)
 
 
 @pytest.mark.parametrize("policy,urls,message", [

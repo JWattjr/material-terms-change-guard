@@ -7,13 +7,14 @@ and routes protocol exposure accordingly.
 
 The deployer freezes the baseline terms, a short description of the amendment,
 1-12 material categories, the route to take on an adverse change
-(`CAP_EXPOSURE`, `PAUSE_MINT`, or `MIGRATE`), and 1-6 public HTTPS evidence URLs.
+(`CAP_EXPOSURE`, `PAUSE_MINT`, or `MIGRATE`), 1-6 public HTTPS evidence URLs,
+`min_sources` (how many must be reachable to decide), and a `max_wait` deadline.
 
 1. Leader and validators each fetch the evidence and classify **every frozen
    category** as `UNCHANGED`, `ADVERSE`, `BENEFICIAL`, or `UNCLEAR`. Labels
    outside the frozen list are dropped; missing or invalid values become `UNCLEAR`.
 2. Deterministic code derives the verdict from that vector. The LLM never picks it:
-   - any `UNCLEAR`, or no source reachable → `UNRESOLVED`, route `CAP_EXPOSURE`
+   - any `UNCLEAR`, or fewer than `min_sources` reachable → `UNRESOLVED`, route `CAP_EXPOSURE`
    - any `ADVERSE` → `MATERIAL_ADVERSE_CHANGE`, route = the frozen adverse route
    - only `BENEFICIAL` → `MATERIAL_BENEFICIAL_CHANGE`, route `CONTINUE`
    - all `UNCHANGED` → `NO_MATERIAL_CHANGE`, route `CONTINUE`
@@ -22,7 +23,8 @@ The deployer freezes the baseline terms, a short description of the amendment,
    source coverage. Nothing reaches state without consensus.
 
 The three material verdicts are terminal and cannot be flipped by a later review.
-`UNRESOLVED` stays retriable. `review()` is permissionless because every input
+`UNRESOLVED` stays retriable until `max_wait`; after it, the current state becomes
+final (an amendment never reviewed becomes `UNRESOLVED` with exposure capped). `review()` is permissionless because every input
 is frozen. The contract holds no funds.
 
 ## Verify

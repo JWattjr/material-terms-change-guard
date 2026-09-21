@@ -11,5 +11,9 @@
 | All sources unavailable | LLM not called; `UNRESOLVED` with coverage 0 | `test_all_sources_unavailable_skips_llm_and_fails_closed` |
 | Leader forges the category vector but keeps the same status | Validator rejects | `test_validator_rejects_divergent_category_vector_with_same_status` |
 | Leader status inconsistent with its own vector | Validator rejects | `test_validator_rejects_status_inconsistent_with_vector` |
+| Fewer reachable sources than `min_sources` | `UNRESOLVED` / `CAP_EXPOSURE` without calling the LLM | `test_fewer_reachable_sources_than_min_sources_fails_closed` |
+| `max_wait` passes on `UNRESOLVED` | State frozen as final | `test_max_wait_freezes_unresolved_state` |
+| `max_wait` passes with no review | `UNRESOLVED`, final | `test_max_wait_without_review_is_unresolved` |
+| Bad `min_sources`, `max_wait`, or oversized baseline | Constructor reverts | `test_constructor_rejects_bad_lifecycle_and_baseline` (5 cases) |
 | Bad constructor input (categories, route, private or duplicate URLs) | Constructor reverts | `test_constructor_rejections` (5 cases) |
 | Finality | Downstream irreversible actions wait for GenLayer finality | Consumer responsibility |
