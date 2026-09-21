@@ -4,20 +4,22 @@
   "chain_id": 61999,
   "deployer": "0xdB433ff614bDD1ecE21Aa97221C3E0a7ecf79c92",
   "source_file": "contracts/material_terms_change_guard.py",
-  "source_commit": "9aa7d5ccce835e67c9373a6695be282adf8a4fd5",
+  "source_commit": "3f4aa3e3bfc62ae0a665b018042b3ed44309fb1c",
   "runner": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6",
-  "contract_address": "0x4Eb5DdeE95B841105A0C5Ed7f1167EC61e346297",
-  "deployment_transaction": "0x81d7ea8acce16b8506bbd8a4bcca3236bab44f3e60246a972cb7058c9e573b31",
+  "contract_address": "0x2C658385B6204d30be6eBA6CA3777dEf40cc78EE",
+  "deployment_transaction": "0x3cb7986596c35f4d8b84b2227735493ba232cb82ec551e39f6c56f9434c4bbf3",
   "deployment_status": "FINALIZED",
-  "explorer_url": "https://explorer-studio.genlayer.com/address/0x4Eb5DdeE95B841105A0C5Ed7f1167EC61e346297",
+  "explorer_url": "https://explorer-studio.genlayer.com/address/0x2C658385B6204d30be6eBA6CA3777dEf40cc78EE",
   "constructor_args": [
     "hashicorp-terraform",
     "HashiCorp relicensed Terraform from MPL-2.0 to the Business Source License 1.1 in August 2023.",
     "{\"license\":\"MPL-2.0\",\"competitive_production_use\":\"Permitted for any purpose, including hosted or embedded offerings that compete with HashiCorp.\",\"source_access\":\"Full source code may be copied, modified, and redistributed.\"}",
     "{\"material_categories\":[\"COMPETITIVE_PRODUCTION_USE\",\"SOURCE_ACCESS\"],\"adverse_route\":\"MIGRATE\"}",
-    "[\"https://raw.githubusercontent.com/hashicorp/terraform/main/LICENSE\"]"
+    "[\"https://raw.githubusercontent.com/hashicorp/terraform/main/LICENSE\"]",
+    1,
+    "2027-12-31T00:00:00Z"
   ],
-  "consensus_test_transaction": "0x31e2e491cf14d66ed673bbbe526e7bcffb30ed568f38c0075c498e8dfdc97fe1",
+  "consensus_test_transaction": "0x30222f93a2892f0885027db96496a77cfe4c329092ff7a6cc43c12527ca1a8da",
   "consensus_test_status": "FINALIZED",
   "expected_state": {
     "status": "MATERIAL_ADVERSE_CHANGE",
@@ -34,6 +36,8 @@
       "COMPETITIVE_PRODUCTION_USE"
     ],
     "instrument_id": "hashicorp-terraform",
+    "max_wait": "2027-12-31T00:00:00+00:00",
+    "min_sources": 1,
     "route": "MIGRATE",
     "source_coverage": 1,
     "status": "MATERIAL_ADVERSE_CHANGE",

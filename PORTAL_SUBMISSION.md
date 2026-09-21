@@ -15,4 +15,4 @@ Built and deployed an MIT-licensed Material Terms Change Guard: a reusable GenLa
 4. GitHub File — https://github.com/JWattjr/material-terms-change-guard/blob/main/docs/SECURITY_AUDIT.md
 5. GitHub File — https://github.com/JWattjr/material-terms-change-guard/blob/main/docs/TEST_MATRIX.md
 6. GitHub File — https://github.com/JWattjr/material-terms-change-guard/blob/main/deployments/studionet.json
-7. GenLayer Explorer Contract — https://explorer-studio.genlayer.com/address/0x4Eb5DdeE95B841105A0C5Ed7f1167EC61e346297
+7. GenLayer Explorer Contract — https://explorer-studio.genlayer.com/address/0x2C658385B6204d30be6eBA6CA3777dEf40cc78EE
