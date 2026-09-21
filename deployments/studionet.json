@@ -1,1 +1,44 @@
-{"network":"studionet","chain_id":61999,"status":"FINALIZED","contract_address":"0x20bb203E313956121446F84a524CEA91e338c22D","deployment_transaction":"0x3f06d1e5cf61ff448f222918bb06ae5c284a8496491ec4adb21de6eb132a51d0","decision_transaction":"0x28ce193343d52ae78ce181058c3e82170c0e2e2e50d68e17fc13622fa6314c95","outcome":"UNRESOLVED / CAP_EXPOSURE; attempts=1."}
+{
+  "contract": "MaterialTermsChangeGuard",
+  "network": "studionet",
+  "chain_id": 61999,
+  "deployer": "0xdB433ff614bDD1ecE21Aa97221C3E0a7ecf79c92",
+  "source_file": "contracts/material_terms_change_guard.py",
+  "source_commit": "9aa7d5ccce835e67c9373a6695be282adf8a4fd5",
+  "runner": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6",
+  "contract_address": "0x4Eb5DdeE95B841105A0C5Ed7f1167EC61e346297",
+  "deployment_transaction": "0x81d7ea8acce16b8506bbd8a4bcca3236bab44f3e60246a972cb7058c9e573b31",
+  "deployment_status": "FINALIZED",
+  "explorer_url": "https://explorer-studio.genlayer.com/address/0x4Eb5DdeE95B841105A0C5Ed7f1167EC61e346297",
+  "constructor_args": [
+    "hashicorp-terraform",
+    "HashiCorp relicensed Terraform from MPL-2.0 to the Business Source License 1.1 in August 2023.",
+    "{\"license\":\"MPL-2.0\",\"competitive_production_use\":\"Permitted for any purpose, including hosted or embedded offerings that compete with HashiCorp.\",\"source_access\":\"Full source code may be copied, modified, and redistributed.\"}",
+    "{\"material_categories\":[\"COMPETITIVE_PRODUCTION_USE\",\"SOURCE_ACCESS\"],\"adverse_route\":\"MIGRATE\"}",
+    "[\"https://raw.githubusercontent.com/hashicorp/terraform/main/LICENSE\"]"
+  ],
+  "consensus_test_transaction": "0x31e2e491cf14d66ed673bbbe526e7bcffb30ed568f38c0075c498e8dfdc97fe1",
+  "consensus_test_status": "FINALIZED",
+  "expected_state": {
+    "status": "MATERIAL_ADVERSE_CHANGE",
+    "route": "MIGRATE"
+  },
+  "consensus_test_state": {
+    "amendment": "HashiCorp relicensed Terraform from MPL-2.0 to the Business Source License 1.1 in August 2023.",
+    "attempts": 1,
+    "category_states": {
+      "COMPETITIVE_PRODUCTION_USE": "ADVERSE",
+      "SOURCE_ACCESS": "UNCHANGED"
+    },
+    "changed_rights": [
+      "COMPETITIVE_PRODUCTION_USE"
+    ],
+    "instrument_id": "hashicorp-terraform",
+    "route": "MIGRATE",
+    "source_coverage": 1,
+    "status": "MATERIAL_ADVERSE_CHANGE",
+    "terminal": true
+  },
+  "matches_expected": true,
+  "deployed_utc": "2026-09-21"
+}
