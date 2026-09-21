@@ -1,11 +1,15 @@
-﻿# Test matrix: Material Terms Change Guard
+# Test matrix: Material Terms Change Guard
 
-| Scenario | Expected behavior |
-| --- | --- |
-| Valid bounded deployment input | Constructor stores canonical immutable inputs. |
-| Public evidence available | Leader/validators independently derive a compact decision tuple. |
-| Evidence unavailable | Contract returns its conservative unresolved/unverifiable route. |
-| Private or local evidence URL | Constructor rejects the input. |
-| Validator result differs | Custom equivalence function rejects the leader result. |
-| Unauthorized write | Contract rejects a non-owner request. |
-| Finality | Any downstream irreversible consequence must be triggered only after the GenLayer transaction is finalized. |
+| Scenario | Expected behavior | Test |
+| --- | --- | --- |
+| All categories unchanged | `NO_MATERIAL_CHANGE` / `CONTINUE`; validator agrees | `test_no_material_change_continues_and_is_terminal` |
+| Repeat review after a terminal verdict | Verdict cannot flip; no new attempt recorded | `test_no_material_change_continues_and_is_terminal` |
+| Any adverse category | `MATERIAL_ADVERSE_CHANGE`, frozen adverse route, changed categories listed | `test_adverse_change_takes_frozen_route_and_lists_categories` |
+| Beneficial only | `MATERIAL_BENEFICIAL_CHANGE` / `CONTINUE` | `test_beneficial_only_continues` |
+| Any unclear category | `UNRESOLVED` / `CAP_EXPOSURE`, stays retriable | `test_unclear_category_fails_closed_and_stays_retriable` |
+| Omitted, invented, or invalid category labels | Normalized to the frozen allowlist; invalid values become `UNCLEAR` | `test_missing_and_invented_categories_are_normalized` |
+| All sources unavailable | LLM not called; `UNRESOLVED` with coverage 0 | `test_all_sources_unavailable_skips_llm_and_fails_closed` |
+| Leader forges the category vector but keeps the same status | Validator rejects | `test_validator_rejects_divergent_category_vector_with_same_status` |
+| Leader status inconsistent with its own vector | Validator rejects | `test_validator_rejects_status_inconsistent_with_vector` |
+| Bad constructor input (categories, route, private or duplicate URLs) | Constructor reverts | `test_constructor_rejections` (5 cases) |
+| Finality | Downstream irreversible actions wait for GenLayer finality | Consumer responsibility |
