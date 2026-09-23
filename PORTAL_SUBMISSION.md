@@ -3,7 +3,9 @@
 **Contribution type:** Builder → Intelligent Contracts
 **Title:** Material Terms Change Guard
 
-## Notes / Description (ready to paste)
+## Notes / Description (draft; public-access blocker)
+
+**Access blocker:** The GitHub repository is currently PRIVATE. Unauthenticated checks returned HTTP 404 for the repository and every GitHub evidence file linked below. The StudioNet Explorer pages are public and verified, but Portal reviewers cannot inspect the source, tests, audit, or manifest until the repository is made public or equivalent public evidence is provided. Do not submit while this blocker remains.
 
 Material Terms Change Guard is an MIT-licensed GenLayer primitive for classifying agreement or policy amendments. Deployers freeze the baseline, amendment, categories, route, HTTPS sources, minimum source coverage, and deadline. Leader and validators independently classify each frozen category; deterministic code derives the outcome and the validators compare the full result. In the StudioNet demonstration, the version-pinned Terraform v1.5.7 README and v1.6.0 license produced `MATERIAL_ADVERSE_CHANGE` / `MIGRATE` under the frozen rule; both sources were available. The deployment and resolution finalized with successful leader execution and majority agreement. This demonstrates one rule-driven case only: it is not legal advice, does not prove every edge case, and does not guarantee semantic prompt-injection resistance. The repository includes 29 focused tests, a pinned GenVM runner, security audit, and test matrix.
 
