@@ -3,7 +3,7 @@
 | Scenario | Expected behavior | Test |
 | --- | --- | --- |
 | All categories unchanged | `NO_MATERIAL_CHANGE` / `CONTINUE`; validator agrees | `test_no_material_change_continues_and_is_terminal` |
-| Prepared, version-pinned Terraform candidate and frozen materiality rule | Both evidence URLs required; adverse category deterministically routes to `MIGRATE` | `test_prepared_studionet_candidate_runs_its_frozen_rule` |
+| Released, version-pinned Terraform example and frozen materiality rule | Both evidence URLs required; adverse category deterministically routes to `MIGRATE` | `test_released_studionet_example_runs_its_frozen_rule` |
 | Repeat review after a terminal verdict | Verdict cannot flip; no new attempt recorded | `test_no_material_change_continues_and_is_terminal` |
 | Any adverse category | `MATERIAL_ADVERSE_CHANGE`, frozen adverse route, changed categories listed | `test_adverse_change_takes_frozen_route_and_lists_categories` |
 | Beneficial only | `MATERIAL_BENEFICIAL_CHANGE` / `CONTINUE` | `test_beneficial_only_continues` |

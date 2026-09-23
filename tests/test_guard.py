@@ -35,11 +35,11 @@ def test_no_material_change_continues_and_is_terminal(direct_vm, direct_deploy):
     assert c.get_state()["attempts"] == 1
 
 
-def test_prepared_studionet_candidate_runs_its_frozen_rule(direct_vm, direct_deploy):
-    candidate = json.loads(Path("deployments/studionet-candidate.json").read_text(encoding="utf-8"))
-    assert candidate["release_status"] == "PREPARED_NOT_DEPLOYED"
-    assert candidate["source_commit"] is None
-    c = direct_deploy(SRC, *candidate["constructor_args"])
+def test_released_studionet_example_runs_its_frozen_rule(direct_vm, direct_deploy):
+    release = json.loads(Path("deployments/studionet-release-2026-09-23.json").read_text(encoding="utf-8"))
+    assert release["release_status"] == "STUDIONET_DEPLOYED_AND_VERIFIED"
+    assert release["source_file"] == SRC
+    c = direct_deploy(SRC, *release["constructor_args"])
     direct_vm.mock_web(r"v1\.5\.7/README\.md", {"status": 200, "body": "License: Mozilla Public License v2.0"})
     direct_vm.mock_web(r"v1\.6\.0/LICENSE", {"status": 200, "body": "Business Source License 1.1; hosted competitive offering restriction"})
     direct_vm.mock_llm(r".*", json.dumps({"category_states": {"COMPETITIVE_PRODUCTION_USE": "ADVERSE"}}))
