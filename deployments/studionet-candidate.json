@@ -3,7 +3,7 @@
   "network": "studionet",
   "source_file": "contracts/material_terms_change_guard.py",
   "source_sha256": "6c15d5a6db7eddb003d4a771d5f1ae08043474f91b489537db50dad1b38b88e8",
-  "source_commit": null,
+  "source_commit": "7a9fb26e9f23429d2c43c488ad019f319148b6b3",
   "constructor_args": [
     "hashicorp-terraform-v1.6.0",
     "Compare the frozen Terraform v1.5.7 license identity to v1.6.0. Apply the frozen rule: for this instrument, changing from MPL-2.0 to BSL-1.1 is adverse to competitive production use.",
