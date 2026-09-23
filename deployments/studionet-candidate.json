@@ -1,5 +1,6 @@
 {
-  "release_status": "PREPARED_NOT_DEPLOYED",
+  "release_status": "PREDEPLOYMENT_SNAPSHOT_SUPERSEDED",
+  "superseded_by": "deployments/studionet-release-2026-09-23.json",
   "network": "studionet",
   "source_file": "contracts/material_terms_change_guard.py",
   "source_sha256": "6c15d5a6db7eddb003d4a771d5f1ae08043474f91b489537db50dad1b38b88e8",
@@ -32,10 +33,5 @@
   ],
   "baseline_scope": "The full v1.5.7 license is 15.6 KB and is not fetched. The v1.5.7 README provides the MPL label. The baseline term and decision rule are explicitly deployer-frozen; the contract demonstrates classification over both version-pinned sources but does not make a legal determination.",
   "source_relationship": "Both evidence files come from HashiCorp's versioned Terraform repository. min_sources=2 requires both version snapshots to be available; it does not represent corroboration by independent publishers.",
-  "pending_release_proof": [
-    "Publish this exact source and record the release commit.",
-    "Deploy on StudioNet and record the finalized deployment receipt.",
-    "Run review(), verify finalized majority agreement, and read back the result.",
-    "Replace this candidate file with receipts and verified Explorer links only after observing them."
-  ]
+  "record_note": "This file preserves the exact pre-deployment constructor and evidence assessment. Live transaction receipts, final state, and verified Explorer links are in the superseding release manifest."
 }

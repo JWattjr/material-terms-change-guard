@@ -3,30 +3,26 @@
 **Contribution type:** Builder → Intelligent Contracts
 **Title:** Material Terms Change Guard
 
-## Notes / Description (release candidate; do not paste until redeployed)
+## Notes / Description (ready to paste)
 
-Material Terms Change Guard is an MIT-licensed GenLayer primitive for classifying agreement or policy amendments. Deployers freeze baseline terms, amendment, categories, adverse route, HTTPS evidence, minimum complete-source count, and deadline. Leader and validators independently classify each category as UNCHANGED, ADVERSE, BENEFICIAL, or UNCLEAR. Deterministic code derives status, route, and changed categories; validators compare the entire result. Missing, empty, invalid, oversized, or insufficient evidence yields UNRESOLVED / CAP_EXPOSURE. Material results are terminal; UNRESOLVED is retryable until the deadline. The candidate includes 29 direct tests, a pinned GenVM runner, audit, test matrix, and a version-pinned Terraform example. Existing StudioNet evidence is for an older source and does not prove this candidate. Direct tests do not prove prompt-injection resistance or live multi-validator behavior.
+Material Terms Change Guard is an MIT-licensed GenLayer primitive for classifying agreement or policy amendments. Deployers freeze the baseline, amendment, categories, route, HTTPS sources, minimum source coverage, and deadline. Leader and validators independently classify each frozen category; deterministic code derives the outcome and the validators compare the full result. In the StudioNet demonstration, the version-pinned Terraform v1.5.7 README and v1.6.0 license produced `MATERIAL_ADVERSE_CHANGE` / `MIGRATE` under the frozen rule; both sources were available. The deployment and resolution finalized with successful leader execution and majority agreement. This demonstrates one rule-driven case only: it is not legal advice, does not prove every edge case, and does not guarantee semantic prompt-injection resistance. The repository includes 29 focused tests, a pinned GenVM runner, security audit, and test matrix.
 
-**Current live-proof status:** NOT READY. `deployments/studionet.json` is historical evidence for commit `3f4aa3e3bfc62ae0a665b018042b3ed44309fb1c`. A two-source, version-pinned constructor example is prepared in `deployments/studionet-candidate.json`; it is not deployed evidence. Deploy the patched source and these arguments on StudioNet, verify source identity and finality, then replace the live-proof paragraph and manifest.
+**Current live proof:** StudioNet contract [`0x83d2FF1206cdf5243E6353DdE4bCbF2D0B42eDF8`](https://explorer-studio.genlayer.com/address/0x83d2FF1206cdf5243E6353DdE4bCbF2D0B42eDF8), source commit `7a9fb26a0b359136e0e164f2ba0281baedcbc1b2`, source SHA-256 `6c15d5a6db7eddb003d4a771d5f1ae08043474f91b489537db50dad1b38b88e8`. Deployment transaction [`0x99e030ebb30c0f5c3b08b3fa7cdfb660eddc326eeab65426e25c091186b7e33b`](https://explorer-studio.genlayer.com/tx/0x99e030ebb30c0f5c3b08b3fa7cdfb660eddc326eeab65426e25c091186b7e33b) and resolution transaction [`0x7c599b51459501f00bfb91491d793627afc42bb5f93847987445ff4e728bee05`](https://explorer-studio.genlayer.com/tx/0x7c599b51459501f00bfb91491d793627afc42bb5f93847987445ff4e728bee05) are FINALIZED. The resolution is `MAJORITY_AGREE`, not unanimous: 3 AGREE and 2 IDLE validator votes were recorded; a validator execution was canceled after quorum. `get_state()` reads back terminal status `MATERIAL_ADVERSE_CHANGE`, route `MIGRATE`, category `COMPETITIVE_PRODUCTION_USE: ADVERSE`, source coverage 2, and one attempt. See [`deployments/studionet-release-2026-09-23.json`](deployments/studionet-release-2026-09-23.json) for complete receipts and inputs.
 
-## Evidence to add after publishing the candidate and collecting new live proof
+## Evidence links
 
 1. GitHub Repository — https://github.com/JWattjr/material-terms-change-guard
 2. GitHub File — https://github.com/JWattjr/material-terms-change-guard/blob/main/contracts/material_terms_change_guard.py
 3. GitHub File — https://github.com/JWattjr/material-terms-change-guard/blob/main/tests/test_guard.py
 4. GitHub File — https://github.com/JWattjr/material-terms-change-guard/blob/main/docs/SECURITY_AUDIT.md
 5. GitHub File — https://github.com/JWattjr/material-terms-change-guard/blob/main/docs/TEST_MATRIX.md
-6. GitHub File — https://github.com/JWattjr/material-terms-change-guard/blob/main/deployments/studionet.json
-7. GitHub File — `deployments/studionet-candidate.json` (candidate template; publish before submission)
-8. GenLayer Explorer Contract (historical source only) — https://explorer-studio.genlayer.com/address/0x2C658385B6204d30be6eBA6CA3777dEf40cc78EE
-9. GitHub File — Terraform v1.5.7 README (version-pinned baseline license label) — https://github.com/hashicorp/terraform/blob/v1.5.7/README.md
-10. GitHub File — Terraform v1.6.0 LICENSE (version-pinned after-state license) — https://github.com/hashicorp/terraform/blob/v1.6.0/LICENSE
+6. GitHub File — https://github.com/JWattjr/material-terms-change-guard/blob/main/deployments/studionet-release-2026-09-23.json
+7. GenLayer Explorer Contract — https://explorer-studio.genlayer.com/address/0x83d2FF1206cdf5243E6353DdE4bCbF2D0B42eDF8
+8. GenLayer Explorer Deployment Transaction — https://explorer-studio.genlayer.com/tx/0x99e030ebb30c0f5c3b08b3fa7cdfb660eddc326eeab65426e25c091186b7e33b
+9. GenLayer Explorer Resolution Transaction — https://explorer-studio.genlayer.com/tx/0x7c599b51459501f00bfb91491d793627afc42bb5f93847987445ff4e728bee05
+10. GitHub File — Terraform v1.5.7 README (version-pinned baseline license label) — https://github.com/hashicorp/terraform/blob/v1.5.7/README.md
+11. GitHub File — Terraform v1.6.0 LICENSE (version-pinned after-state license) — https://github.com/hashicorp/terraform/blob/v1.6.0/LICENSE
 
-Historical resolution transaction hash: `0x30222f93a2892f0885027db96496a77cfe4c329092ff7a6cc43c12527ca1a8da`. Its direct Explorer URL could not be verified from this environment, so do not add an invented path.
+## Scope and limitations
 
-## StudioNet release checklist
-
-1. Use the prepared version-pinned source pair: v1.5.7 README (3.73 KB; identifies MPL 2.0) and v1.6.0 LICENSE (2.86 KB; identifies BSL 1.1). Both are from the same HashiCorp repository, so `min_sources=2` requires both version snapshots but is not independent-source corroboration. The complete v1.5.7 LICENSE is 15.6 KB, so the baseline term and market rule remain frozen deployer inputs. The candidate is a version comparison under that rule, not a legal opinion.
-2. Commit and publish the patched source and tests. Record the exact commit and source hash; do not reuse the historical deployment as proof of it.
-3. Deploy on **StudioNet only**, complete a permissionless `review()`, and verify both transactions are FINALIZED with successful execution and majority agreement. Read back the final state and compare it with the frozen constructor inputs.
-4. Save a new manifest with address, release commit, constructor, transaction hashes, receipts, validator outcome, final state, and verified Explorer links. Then update the Portal text and evidence list.
+The evidence is a successful basic demonstration of a frozen-rule, permissionless classification using two version-pinned sources from the same repository. The v1.5.7 README identifies MPL-2.0 but is not the complete license; the baseline label and materiality rule are deployer-frozen inputs, not a legal determination. The live example does not exercise complex exceptions, conflicting-rule handling, postponement recovery, or prompt-injection resistance. Local tests cover additional branches, but mocked direct tests do not establish live multi-validator behavior for those cases. `deployments/studionet.json` and the older contract address are historical only; this submission's current evidence is StudioNet.

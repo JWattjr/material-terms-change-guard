@@ -40,13 +40,21 @@ See docs/SECURITY_AUDIT.md and docs/TEST_MATRIX.md.
 
 ## Deployment evidence scope
 
-`deployments/studionet.json` records a finalized StudioNet result for source
-commit `3f4aa3e3bfc62ae0a665b018042b3ed44309fb1c`. The local source now has
-additional evidence-validation fixes and is **not** the source at that address.
-`deployments/studionet-candidate.json` prepares a two-source, version-pinned
-example using the v1.5.7 README's MPL label and the v1.6.0 BSL license. The
-v1.5.7 README is not the full license; the baseline and classification rule are
-frozen deployer inputs. The historical one-source `main/LICENSE` deployment
-does not prove this example, all rule scenarios, or semantic prompt-injection
-resistance. Redeploy this exact source and finalize a new resolution before
-presenting it as current live proof.
+`deployments/studionet-release-2026-09-23.json` is the current StudioNet
+evidence for source commit `7a9fb26a0b359136e0e164f2ba0281baedcbc1b2`.
+Deployment and `review()` transactions are FINALIZED; both report successful
+leader execution and MAJORITY_AGREE. The manifest records the deployed address,
+transactions, frozen constructor inputs, final state, and checked Explorer
+links. The source returned by StudioNet matches the release source after
+normalizing line endings.
+
+`deployments/studionet.json` is historical evidence for commit
+`3f4aa3e3bfc62ae0a665b018042b3ed44309fb1c`; it is not the current deployment.
+`deployments/studionet-candidate.json` is the preserved pre-deployment input
+record, now superseded by the release manifest. The live Terraform example
+compares version-pinned HashiCorp sources under a deployer-frozen MPL-2.0 to
+BSL-1.1 materiality rule. Its v1.5.7 README identifies the MPL label but is not
+the complete license, and both fetched sources are from the same repository.
+This demonstrates one frozen-rule classification and route, not legal advice,
+independent-publisher corroboration, every rule scenario, or semantic
+prompt-injection resistance. See `docs/SECURITY_AUDIT.md` for residual limits.

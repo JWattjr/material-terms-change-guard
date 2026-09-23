@@ -37,7 +37,7 @@ This is an engineering audit, not formal verification, and not a financial or le
 - Public webpages can change or disappear; use stable primary sources.
 - HTTPS does not prove source authority; the deployer chooses official sources.
 - DNS names can resolve to non-public addresses or change after deployment; the URL syntax check is not a network-layer SSRF guarantee.
-- The historical deployment's single mutable license source and deployer-authored baseline do not prove historical before/after provenance. The prepared candidate fetches two version-pinned sources, but its baseline and materiality rule remain deployer-frozen.
+- The historical deployment's single mutable license source and deployer-authored baseline do not prove historical before/after provenance. The current StudioNet demonstration fetches two version-pinned sources from the same repository, but the v1.5.7 README is only a baseline license label, not the complete license; the baseline and materiality rule remain deployer-frozen.
 - Mocked direct tests do not prove semantic prompt-injection resistance or independent live-validator correctness.
 - Downstream protocols must wait for GenLayer finality before acting on a route.
-- The StudioNet manifest records commit `3f4aa3e3bfc62ae0a665b018042b3ed44309fb1c`; it is historical relative to these uncommitted fixes.
+- `deployments/studionet.json` is historical and records commit `3f4aa3e3bfc62ae0a665b018042b3ed44309fb1c`. The current live evidence is `deployments/studionet-release-2026-09-23.json`, which records source commit `7a9fb26a0b359136e0e164f2ba0281baedcbc1b2` and the verified StudioNet deployment and resolution.

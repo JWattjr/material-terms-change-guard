@@ -1,0 +1,99 @@
+{
+  "release_status": "STUDIONET_DEPLOYED_AND_VERIFIED",
+  "network": "studionet",
+  "chain_id": 61999,
+  "deployer": "0xdB433ff614bDD1ecE21Aa97221C3E0a7ecf79c92",
+  "source_file": "contracts/material_terms_change_guard.py",
+  "source_commit": "7a9fb26a0b359136e0e164f2ba0281baedcbc1b2",
+  "source_sha256": "6c15d5a6db7eddb003d4a771d5f1ae08043474f91b489537db50dad1b38b88e8",
+  "deployed_source_verification": {
+    "method": "genlayer code <contract_address> compared with local source",
+    "comparison": "Exact source text match after normalizing line endings",
+    "normalized_source_sha256": "c045830d988c1006a0ac26018ea015b216d8f87073d23ed3ad917e7bd739a542",
+    "verified_utc_date": "2026-09-23"
+  },
+  "runner": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6",
+  "contract_address": "0x83d2FF1206cdf5243E6353DdE4bCbF2D0B42eDF8",
+  "deployment_transaction": "0x99e030ebb30c0f5c3b08b3fa7cdfb660eddc326eeab65426e25c091186b7e33b",
+  "deployment_status": "FINALIZED",
+  "deployment_execution_result": "SUCCESS",
+  "deployment_consensus_result": "MAJORITY_AGREE",
+  "deployment_explorer_url": "https://explorer-studio.genlayer.com/tx/0x99e030ebb30c0f5c3b08b3fa7cdfb660eddc326eeab65426e25c091186b7e33b",
+  "constructor_args": [
+    "hashicorp-terraform-v1.6.0",
+    "Compare the frozen Terraform v1.5.7 license identity to v1.6.0. Apply the frozen rule: for this instrument, changing from MPL-2.0 to BSL-1.1 is adverse to competitive production use.",
+    "{\"baseline_version\":\"Terraform v1.5.7\",\"license_identity\":\"MPL-2.0\",\"materiality_rule\":\"For this instrument, a change from MPL-2.0 to BSL-1.1 is ADVERSE to competitive production use. This is a frozen market rule, not a legal opinion.\"}",
+    "{\"material_categories\":[\"COMPETITIVE_PRODUCTION_USE\"],\"adverse_route\":\"MIGRATE\"}",
+    "[\"https://raw.githubusercontent.com/hashicorp/terraform/v1.5.7/README.md\",\"https://raw.githubusercontent.com/hashicorp/terraform/v1.6.0/LICENSE\"]",
+    2,
+    "2027-12-31T00:00:00Z"
+  ],
+  "evidence_sources": [
+    {
+      "role": "version-pinned baseline license label",
+      "url": "https://raw.githubusercontent.com/hashicorp/terraform/v1.5.7/README.md",
+      "size_reported_by_github": "3.73 KB",
+      "contract_limit_bytes": 7000,
+      "scope": "Identifies the v1.5.7 license as MPL-2.0; it is not the complete license."
+    },
+    {
+      "role": "version-pinned after-state license source",
+      "url": "https://raw.githubusercontent.com/hashicorp/terraform/v1.6.0/LICENSE",
+      "size_reported_by_github": "2.86 KB",
+      "contract_limit_bytes": 7000,
+      "scope": "Identifies the v1.6.0 license as BSL-1.1."
+    }
+  ],
+  "resolution_transaction": "0x7c599b51459501f00bfb91491d793627afc42bb5f93847987445ff4e728bee05",
+  "resolution_status": "FINALIZED",
+  "resolution_execution_result": "SUCCESS",
+  "resolution_consensus_result": "MAJORITY_AGREE",
+  "resolution_leader_execution_result": "SUCCESS",
+  "resolution_validator_votes": {
+    "revealed": 5,
+    "agree": 3,
+    "idle": 2,
+    "unanimous": false,
+    "note": "A validator execution was canceled after quorum (VALIDATOR_QUORUM_REACHED); the transaction finalized with MAJORITY_AGREE."
+  },
+  "resolution_explorer_url": "https://explorer-studio.genlayer.com/tx/0x7c599b51459501f00bfb91491d793627afc42bb5f93847987445ff4e728bee05",
+  "contract_explorer_url": "https://explorer-studio.genlayer.com/address/0x83d2FF1206cdf5243E6353DdE4bCbF2D0B42eDF8",
+  "explorer_link_verification": {
+    "method": "Read-only HTTP GET",
+    "results": [
+      {
+        "url": "https://explorer-studio.genlayer.com/address/0x83d2FF1206cdf5243E6353DdE4bCbF2D0B42eDF8",
+        "http_status": 200,
+        "response_contains_exact_identifier": true
+      },
+      {
+        "url": "https://explorer-studio.genlayer.com/tx/0x99e030ebb30c0f5c3b08b3fa7cdfb660eddc326eeab65426e25c091186b7e33b",
+        "http_status": 200,
+        "response_contains_exact_identifier": true
+      },
+      {
+        "url": "https://explorer-studio.genlayer.com/tx/0x7c599b51459501f00bfb91491d793627afc42bb5f93847987445ff4e728bee05",
+        "http_status": 200,
+        "response_contains_exact_identifier": true
+      }
+    ]
+  },
+  "final_state_readback": {
+    "instrument_id": "hashicorp-terraform-v1.6.0",
+    "amendment": "Compare the frozen Terraform v1.5.7 license identity to v1.6.0. Apply the frozen rule: for this instrument, changing from MPL-2.0 to BSL-1.1 is adverse to competitive production use.",
+    "status": "MATERIAL_ADVERSE_CHANGE",
+    "route": "MIGRATE",
+    "terminal": true,
+    "min_sources": 2,
+    "max_wait": "2027-12-31T00:00:00+00:00",
+    "changed_rights": [
+      "COMPETITIVE_PRODUCTION_USE"
+    ],
+    "category_states": {
+      "COMPETITIVE_PRODUCTION_USE": "ADVERSE"
+    },
+    "source_coverage": 2,
+    "attempts": 1
+  },
+  "demonstration_scope": "This is a successful basic demonstration of the frozen-rule, allowlisted-category resolution path. It is not a legal determination or proof of complex exceptions, conflicting-rule handling, postponement recovery, or semantic prompt-injection resistance. Both fetched version snapshots are from the same HashiCorp repository; min_sources=2 is availability coverage, not independent-publisher corroboration."
+}
