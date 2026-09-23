@@ -1,0 +1,41 @@
+{
+  "release_status": "PREPARED_NOT_DEPLOYED",
+  "network": "studionet",
+  "source_file": "contracts/material_terms_change_guard.py",
+  "source_sha256": "6c15d5a6db7eddb003d4a771d5f1ae08043474f91b489537db50dad1b38b88e8",
+  "source_commit": null,
+  "constructor_args": [
+    "hashicorp-terraform-v1.6.0",
+    "Compare the frozen Terraform v1.5.7 license identity to v1.6.0. Apply the frozen rule: for this instrument, changing from MPL-2.0 to BSL-1.1 is adverse to competitive production use.",
+    "{\"baseline_version\":\"Terraform v1.5.7\",\"license_identity\":\"MPL-2.0\",\"materiality_rule\":\"For this instrument, a change from MPL-2.0 to BSL-1.1 is ADVERSE to competitive production use. This is a frozen market rule, not a legal opinion.\"}",
+    "{\"material_categories\":[\"COMPETITIVE_PRODUCTION_USE\"],\"adverse_route\":\"MIGRATE\"}",
+    "[\"https://raw.githubusercontent.com/hashicorp/terraform/v1.5.7/README.md\",\"https://raw.githubusercontent.com/hashicorp/terraform/v1.6.0/LICENSE\"]",
+    2,
+    "2027-12-31T00:00:00Z"
+  ],
+  "evidence_sources": [
+    {
+      "role": "contract_fetches_this_version-pinned_baseline-label_source",
+      "url": "https://raw.githubusercontent.com/hashicorp/terraform/v1.5.7/README.md",
+      "size_reported_by_github": "3.73 KB",
+      "contract_limit_bytes": 7000,
+      "verified_accessible_on": "2026-09-23",
+      "scope": "The README identifies the v1.5.7 license as MPL v2.0; it is not the complete MPL license text."
+    },
+    {
+      "role": "contract_fetches_this_version-pinned_after-state_license_source",
+      "url": "https://raw.githubusercontent.com/hashicorp/terraform/v1.6.0/LICENSE",
+      "size_reported_by_github": "2.86 KB",
+      "contract_limit_bytes": 7000,
+      "verified_accessible_on": "2026-09-23"
+    }
+  ],
+  "baseline_scope": "The full v1.5.7 license is 15.6 KB and is not fetched. The v1.5.7 README provides the MPL label. The baseline term and decision rule are explicitly deployer-frozen; the contract demonstrates classification over both version-pinned sources but does not make a legal determination.",
+  "source_relationship": "Both evidence files come from HashiCorp's versioned Terraform repository. min_sources=2 requires both version snapshots to be available; it does not represent corroboration by independent publishers.",
+  "pending_release_proof": [
+    "Publish this exact source and record the release commit.",
+    "Deploy on StudioNet and record the finalized deployment receipt.",
+    "Run review(), verify finalized majority agreement, and read back the result.",
+    "Replace this candidate file with receipts and verified Explorer links only after observing them."
+  ]
+}

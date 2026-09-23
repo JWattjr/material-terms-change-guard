@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 import pytest
 
@@ -32,6 +33,21 @@ def test_no_material_change_continues_and_is_terminal(direct_vm, direct_deploy):
     _mock(direct_vm, {"REDEMPTION_FEES": "ADVERSE", "REDEMPTION_WINDOW": "UNCHANGED", "FREEZE_RIGHTS": "UNCHANGED"})
     assert c.review()["status"] == "NO_MATERIAL_CHANGE"
     assert c.get_state()["attempts"] == 1
+
+
+def test_prepared_studionet_candidate_runs_its_frozen_rule(direct_vm, direct_deploy):
+    candidate = json.loads(Path("deployments/studionet-candidate.json").read_text(encoding="utf-8"))
+    assert candidate["release_status"] == "PREPARED_NOT_DEPLOYED"
+    assert candidate["source_commit"] is None
+    c = direct_deploy(SRC, *candidate["constructor_args"])
+    direct_vm.mock_web(r"v1\.5\.7/README\.md", {"status": 200, "body": "License: Mozilla Public License v2.0"})
+    direct_vm.mock_web(r"v1\.6\.0/LICENSE", {"status": 200, "body": "Business Source License 1.1; hosted competitive offering restriction"})
+    direct_vm.mock_llm(r".*", json.dumps({"category_states": {"COMPETITIVE_PRODUCTION_USE": "ADVERSE"}}))
+    result = c.review()
+    assert result["status"] == "MATERIAL_ADVERSE_CHANGE"
+    assert result["route"] == "MIGRATE"
+    assert result["source_coverage"] == 2
+    assert direct_vm.run_validator()
 
 
 def test_adverse_change_takes_frozen_route_and_lists_categories(direct_vm, direct_deploy):
@@ -74,6 +90,16 @@ def test_all_sources_unavailable_skips_llm_and_fails_closed(direct_vm, direct_de
     result = c.review()
     assert result["status"] == "UNRESOLVED" and result["source_coverage"] == 0
     assert result["changed_rights"] == []
+
+
+@pytest.mark.parametrize("body", ["", " ", "x" * 7001, b"\xff"])
+def test_empty_oversized_or_invalid_evidence_is_not_counted(direct_vm, direct_deploy, body):
+    c = _deploy(direct_deploy)
+    direct_vm.mock_web(r".*", {"status": 200, "body": body})
+    direct_vm.mock_llm(r".*", json.dumps({"category_states": ALL_UNCHANGED}))
+    result = c.review()
+    assert result["status"] == "UNRESOLVED" and result["source_coverage"] == 0
+    assert direct_vm.run_validator()
 
 
 def test_validator_rejects_divergent_category_vector_with_same_status(direct_vm, direct_deploy):
@@ -138,6 +164,9 @@ def test_constructor_rejects_bad_lifecycle_and_baseline(direct_vm, direct_deploy
     ({"material_categories": ["FEES", "fees"]}, URLS, "unique"),
     ({"material_categories": ["FEES"], "adverse_route": "LIQUIDATE"}, URLS, "adverse_route"),
     (POLICY, ["https://192.168.1.1/terms"], "public"),
+    (POLICY, ["https://[::1]/terms"], "public"),
+    (POLICY, ["https://example.org:443/terms"], "public"),
+    (POLICY, ["https://example.org /terms"], "public"),
     (POLICY, URLS + URLS, "unique"),
 ])
 def test_constructor_rejections(direct_vm, direct_deploy, policy, urls, message):

@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 
 from genlayer import *
 
-MAX_CHARS = 7000
+MAX_EVIDENCE_BYTES = 7000
 MAX_CATEGORIES = 12
 CATEGORY_STATES = ("UNCHANGED", "ADVERSE", "BENEFICIAL", "UNCLEAR")
 ADVERSE_ROUTES = ("CAP_EXPOSURE", "PAUSE_MINT", "MIGRATE")
@@ -33,18 +33,19 @@ def _json(value, label):
 def _public_https(url):
     if not isinstance(url, str) or not url.startswith("https://") or len(url) > 500:
         raise gl.vm.UserError("[EXPECTED] bounded HTTPS source required")
-    host = url[8:].split("/", 1)[0].split(":", 1)[0].lower()
-    if not host or host in ("localhost", "127.0.0.1") or host.endswith((".local", ".internal")) or "@" in url:
+    authority = url[8:].split("/", 1)[0].split("?", 1)[0].split("#", 1)[0]
+    if any(char.isspace() for char in url) or "\\" in url or "@" in authority or ":" in authority:
+        raise gl.vm.UserError("[EXPECTED] source must be public")
+    host = authority.lower()
+    if host in ("localhost", "127.0.0.1") or host.endswith((".local", ".internal", ".localhost")):
         raise gl.vm.UserError("[EXPECTED] source must be public")
     labels = host.split(".")
-    if all(label.isdigit() for label in labels):
-        if len(labels) != 4 or any(int(label) > 255 for label in labels):
-            raise gl.vm.UserError("[EXPECTED] source URL is invalid")
-        o = [int(label) for label in labels]
-        if (o[0] in (0, 10, 127) or o[0] >= 224 or (o[0] == 100 and 64 <= o[1] <= 127)
-                or (o[0] == 169 and o[1] == 254) or (o[0] == 172 and 16 <= o[1] <= 31)
-                or (o[0] == 192 and o[1] == 168) or (o[0] == 198 and o[1] in (18, 19))):
-            raise gl.vm.UserError("[EXPECTED] source must be public")
+    if (len(labels) < 2 or labels[-1].isdigit() or any(
+        not 1 <= len(label) <= 63 or not label[0].isalnum() or not label[-1].isalnum()
+        or any(not (char.isascii() and (char.isalnum() or char == "-")) for char in label)
+        for label in labels
+    )):
+        raise gl.vm.UserError("[EXPECTED] source must be public")
 
 
 def _time(value):
@@ -87,11 +88,16 @@ def _derive(category_states, coverage, min_sources, adverse_route):
 def _classify(amendment, baseline, categories, urls, min_sources, adverse_route):
     evidence, coverage = [], 0
     for index, url in enumerate(urls):
-        response = gl.nondet.web.get(url)
-        ok = response.status == 200
+        try:
+            response = gl.nondet.web.get(url)
+            raw = response.body if response.status == 200 else b""
+            body = raw.decode("utf-8") if 0 < len(raw) <= MAX_EVIDENCE_BYTES else ""
+            ok = bool(body.strip())
+        except Exception:
+            ok = False
+            body = ""
         coverage += 1 if ok else 0
-        body = response.body[:MAX_CHARS].decode("utf-8", errors="replace") if ok else "[UNAVAILABLE]"
-        evidence.append({"id": str(index), "url": url, "available": ok, "content": body})
+        evidence.append({"id": str(index), "url": url, "available": ok, "content": body if ok else "[UNAVAILABLE]"})
     if coverage < min_sources:
         # Too few frozen sources reachable to decide: fail closed without the LLM.
         return _derive({c: "UNCLEAR" for c in categories}, coverage, min_sources, adverse_route)
